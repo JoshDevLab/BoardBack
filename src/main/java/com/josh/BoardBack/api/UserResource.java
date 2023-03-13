@@ -1,9 +1,8 @@
 package com.josh.BoardBack.api;
 
-import com.josh.BoardBack.domain.Role;
-import com.josh.BoardBack.domain.User;
+import com.josh.BoardBack.user.Role;
+import com.josh.BoardBack.user.User;
 import com.josh.BoardBack.service.UserService;
-import lombok.Data;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -35,16 +34,6 @@ public class UserResource {
         return ResponseEntity.created(uri).body(userService.saveRole(role));
     }
 
-    @PostMapping("/role/addtouser")
-    public ResponseEntity<?>addRoleToUser(@RequestBody RoleToUserFrom form) {
-        userService.addRoleToUser(form.getUsername(), form.getRoleName());
-        return ResponseEntity.ok().build();
-    }
 
 }
 
-@Data
-class RoleToUserFrom {
-    private String username;
-    private String roleName;
-}
