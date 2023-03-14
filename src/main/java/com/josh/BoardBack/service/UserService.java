@@ -4,11 +4,11 @@ import com.josh.BoardBack.user.Role;
 import com.josh.BoardBack.user.User;
 
 import java.util.List;
+import java.util.Optional;
 
 public interface UserService {
     User saveUser(User user);
-    Role saveRole(Role role);
-    User getUser(String username);
+    Optional<User> getUser(String email);
     List<User> getUsers();
 
 }
