@@ -1,5 +1,6 @@
 package com.josh.BoardBack.config;
 
+import com.josh.BoardBack.auth.AuthenticationController;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -9,8 +10,6 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
-
-import javax.servlet.Filter;
 
 @Configuration
 @EnableWebSecurity
@@ -23,12 +22,11 @@ public class SecurityConfiguration {
 
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
-
         http
             .csrf()
             .disable()
             .authorizeHttpRequests()
-            .requestMatchers() // 스프링 시큐리티를 사용하지 않아도 되는 url
+            .antMatchers("/api/v1/auth/*")
             .permitAll() // 위의 url들을 허용한다는 메소드
             .anyRequest() // 그 외의 다른 경로들은
             .authenticated() // 인증이 필요하다는 메소드
