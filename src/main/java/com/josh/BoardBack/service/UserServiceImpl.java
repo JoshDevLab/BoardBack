@@ -2,11 +2,11 @@ package com.josh.BoardBack.service;
 
 import com.josh.BoardBack.user.User;
 import com.josh.BoardBack.repo.UserRepo;
+import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
-import javax.transaction.Transactional;
 import java.util.List;
 import java.util.Optional;
 

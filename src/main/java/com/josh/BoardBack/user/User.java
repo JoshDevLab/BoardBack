@@ -1,5 +1,6 @@
 package com.josh.BoardBack.user;
 
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -8,7 +9,6 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
-import javax.persistence.*;
 import java.util.Collection;
 import java.util.List;
 
@@ -18,7 +18,8 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 public class User implements UserDetails {
-    @Id @GeneratedValue(strategy = GenerationType.AUTO)
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
     private String firstname;
     private String lastname;
@@ -26,7 +27,6 @@ public class User implements UserDetails {
     private String password;
     private String username;
 
-    @Enumerated(EnumType.STRING)
     private Role role;
 
     @Override
