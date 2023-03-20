@@ -1,6 +1,5 @@
 package com.josh.BoardBack.config;
 
-import com.josh.BoardBack.auth.AuthenticationController;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
