@@ -5,10 +5,9 @@ import com.josh.BoardBack.dto.BoardDto;
 import com.josh.BoardBack.service.BoardService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 @RequestMapping("/api/v1/Board")
@@ -17,9 +16,14 @@ public class BoardController {
 
     private final BoardService boardService;
 
-    @PostMapping("registerBoard")
+    @PostMapping()
     public ResponseEntity<Board> registerBoard(@RequestBody BoardDto boardDto) {
-
         return ResponseEntity.ok(boardService.registerBoard(boardDto));
     }
+
+    @GetMapping
+    public ResponseEntity<List<Board>> getBoards() {
+        return ResponseEntity.ok(boardService.getBoards());
+    }
+
 }
