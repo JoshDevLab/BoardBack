@@ -10,28 +10,32 @@ import lombok.NoArgsConstructor;
 import java.util.ArrayList;
 import java.util.List;
 
+import static jakarta.persistence.FetchType.LAZY;
+
 @Entity
 @Getter
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class Board {
-
+public class Comment {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
-
-    @Column(nullable = false)
-    private String title;
 
     @Column(nullable = false, length = 1000)
     private String content;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "user_id", nullable = false)
-    private User author;
+    private Board board;
 
-    @OneToMany(mappedBy = "parent", orphanRemoval = true)
-    private List<Comment> comments = new ArrayList<>();
+    @ManyToOne(fetch = FetchType.LAZY)
+    private Comment parentComment;
+
+    @OneToMany(mappedBy = "parentComment", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Comment> childComments = new ArrayList<>();
+
+    @ManyToOne(fetch = LAZY)
+    @JoinColumn(name = "user_id")
+    private User user;
 
 }
