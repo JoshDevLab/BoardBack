@@ -14,6 +14,8 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
+import java.util.List;
+
 @SpringBootTest
 @Transactional
 public class BoardTest {
@@ -28,13 +30,13 @@ public class BoardTest {
     public void registerBoard() {
         // given
         User user = User.builder()
-                    .id(1L)
-                    .build();
+                .id(1L)
+                .build();
 
         BoardDto boardDto = BoardDto.builder()
-                        .title("테스트제목")
-                        .content("테스트내용")
-                        .author(user).build();
+                .title("테스트제목")
+                .content("테스트내용")
+                .author(user).build();
 
         // when
         Board board = service.registerBoard(boardDto);
@@ -81,18 +83,18 @@ public class BoardTest {
     public void registerCommentTest() {
         // given
         User user = User.builder()
-                    .id(1L)
-                    .build();
+                .id(1L)
+                .build();
 
         BoardDto boardDto = BoardDto.builder()
-                                .title("테스트제목")
-                                .content("테스트내용")
-                                .author(user).build();
+                .title("테스트제목")
+                .content("테스트내용")
+                .author(user).build();
 
         CommentDto commentDto = CommentDto.builder()
-                                    .content("댓글내용")
-                                    .board(boardDto.toEntity())
-                                    .user(user).build();
+                .content("댓글내용")
+                .board(boardDto.toEntity())
+                .user(user).build();
 
         service.registerBoard(boardDto);
 
@@ -103,4 +105,76 @@ public class BoardTest {
         Assertions.assertThat(comment.getContent()).isEqualTo("댓글내용");
     }
 
+
+    @Test
+    @DisplayName("대댓글쓰기 테스트")
+    public void registerCoCommentTest() {
+        // given
+        User user = User.builder()
+                .id(1L)
+                .build();
+
+        BoardDto boardDto = BoardDto.builder()
+                .title("테스트제목")
+                .content("테스트내용")
+                .author(user).build();
+
+        CommentDto commentDto = CommentDto.builder()
+                .content("댓글내용")
+                .board(boardDto.toEntity())
+                .user(user).build();
+
+        CommentDto cocommentDto = CommentDto.builder()
+                .content("대댓글내용")
+                .parentComment(commentDto.toEntity())
+                .user(user).build();
+
+        service.registerBoard(boardDto);
+
+        // when
+        Comment comment = commentService.registerComment(commentDto);
+        Comment cocomment = commentService.registerComment(cocommentDto);
+
+        // then
+        Assertions.assertThat(comment.getId()).isEqualTo(1L);
+        Assertions.assertThat(cocomment.getId()).isEqualTo(2L);
+    }
+
+    @Test
+    @DisplayName("대댓글까지 조회 테스트")
+    public void cocommentSelect() {
+
+        // given
+        User user = User.builder()
+                .id(1L)
+                .build();
+
+        BoardDto boardDto = BoardDto.builder()
+                .title("테스트제목")
+                .content("테스트내용")
+                .author(user).build();
+
+        Board board = service.registerBoard(boardDto);
+
+        CommentDto commentDto = CommentDto.builder()
+                .content("댓글내용")
+                .board(board)
+                .user(user).build();
+
+        Comment comment = commentService.registerComment(commentDto);
+
+        CommentDto cocommentDto = CommentDto.builder()
+                .content("대댓글내용")
+                .board(board)
+                .parentComment(comment)
+                .user(user).build();
+
+        commentService.registerComment(cocommentDto);
+
+        // when
+        List<Board> boards = service.getBoards();
+
+        // then
+        Assertions.assertThat(boards.size()).isEqualTo(1);
+    }
 }
