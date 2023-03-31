@@ -7,7 +7,7 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
-import java.util.List;
+import java.util.Set;
 
 import static jakarta.persistence.FetchType.LAZY;
 
@@ -32,7 +32,7 @@ public class Comment {
     private Comment parentComment;
 
     @OneToMany(mappedBy = "parentComment", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<Comment> childComments;
+    private Set<Comment> childComments; // List -> Set으로 변경
 
     @ManyToOne(fetch = LAZY)
     @JoinColumn(name = "user_id")

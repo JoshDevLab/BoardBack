@@ -1,6 +1,7 @@
 package com.josh.BoardBack.service;
 
 import com.josh.BoardBack.board.Board;
+import com.josh.BoardBack.config.CustomTuple;
 import com.josh.BoardBack.dto.BoardDto;
 import com.josh.BoardBack.repo.BoardRepo;
 import jakarta.transaction.Transactional;
@@ -24,7 +25,7 @@ public class BoardServiceImpl implements BoardService{
     }
 
     @Override
-    public List<Board> getBoards() {
-        return boardRepo.findAll();
+    public List<CustomTuple> getBoards() {
+        return boardRepo.customFindAll();
     }
 }

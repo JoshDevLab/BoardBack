@@ -1,9 +1,9 @@
 package com.josh.BoardBack.repo;
 
-import com.josh.BoardBack.board.Board;
+import com.josh.BoardBack.config.CustomTuple;
 
 import java.util.List;
 
 public interface BoardRepoCustom {
-    List<Board> findAll();
+    List<CustomTuple> customFindAll();
 }

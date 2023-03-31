@@ -1,11 +1,15 @@
 package com.josh.BoardBack;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.josh.BoardBack.board.Board;
 import com.josh.BoardBack.board.Comment;
+import com.josh.BoardBack.config.CustomTuple;
 import com.josh.BoardBack.dto.BoardDto;
 import com.josh.BoardBack.dto.CommentDto;
 import com.josh.BoardBack.service.BoardService;
 import com.josh.BoardBack.service.CommentService;
+import com.josh.BoardBack.user.Role;
 import com.josh.BoardBack.user.User;
 import jakarta.transaction.Transactional;
 import org.assertj.core.api.Assertions;
@@ -119,6 +123,8 @@ public class BoardTest {
                 .content("테스트내용")
                 .author(user).build();
 
+        service.registerBoard(boardDto);
+
         CommentDto commentDto = CommentDto.builder()
                 .content("댓글내용")
                 .board(boardDto.toEntity())
@@ -128,8 +134,6 @@ public class BoardTest {
                 .content("대댓글내용")
                 .parentComment(commentDto.toEntity())
                 .user(user).build();
-
-        service.registerBoard(boardDto);
 
         // when
         Comment comment = commentService.registerComment(commentDto);
@@ -142,11 +146,12 @@ public class BoardTest {
 
     @Test
     @DisplayName("대댓글까지 조회 테스트")
-    public void cocommentSelect() {
+    public void cocommentSelect() throws JsonProcessingException {
 
         // given
         User user = User.builder()
                 .id(1L)
+                .role(Role.USER)
                 .build();
 
         BoardDto boardDto = BoardDto.builder()
@@ -172,7 +177,13 @@ public class BoardTest {
         commentService.registerComment(cocommentDto);
 
         // when
-        List<Board> boards = service.getBoards();
+        List<CustomTuple> boards = service.getBoards();
+
+        // ObjectMapper 생성
+        ObjectMapper objectMapper = new ObjectMapper();
+
+        String resultJson = objectMapper.writeValueAsString(boards);
+        System.out.println("resultJson = " + resultJson);
 
         // then
         Assertions.assertThat(boards.size()).isEqualTo(1);

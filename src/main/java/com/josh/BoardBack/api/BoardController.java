@@ -1,6 +1,7 @@
 package com.josh.BoardBack.api;
 
 import com.josh.BoardBack.board.Board;
+import com.josh.BoardBack.config.CustomTuple;
 import com.josh.BoardBack.dto.BoardDto;
 import com.josh.BoardBack.service.BoardService;
 import lombok.RequiredArgsConstructor;
@@ -22,7 +23,7 @@ public class BoardController {
     }
 
     @GetMapping
-    public ResponseEntity<List<Board>> getBoards() {
+    public ResponseEntity<List<CustomTuple>> getBoards() {
         return ResponseEntity.ok(boardService.getBoards());
     }
 

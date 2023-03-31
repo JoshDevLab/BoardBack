@@ -7,7 +7,7 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
-import java.util.List;
+import java.util.Set;
 
 @Entity
 @Getter
@@ -31,6 +31,6 @@ public class Board {
     private User author;
 
     @OneToMany(mappedBy = "board", orphanRemoval = true)
-    private List<Comment> comments;
+    private Set<Comment> comments; // List -> Set으로 변경
 
 }

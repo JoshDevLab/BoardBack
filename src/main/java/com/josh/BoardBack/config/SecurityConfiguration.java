@@ -26,7 +26,7 @@ public class SecurityConfiguration {
             .disable()
             .authorizeHttpRequests()
             .requestMatchers("/api/v1/auth/**")
-            .permitAll() // 위의 url들을 허용한다는 메소드
+            .permitAll() // 위의 url 들을 허용한다는 메소드
             .anyRequest() // 그 외의 다른 경로들은
             .authenticated() // 인증이 필요하다는 메소드
             .and()

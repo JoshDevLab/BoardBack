@@ -7,7 +7,7 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
 
-import java.util.List;
+import java.util.Set;
 
 @Getter
 @Setter
@@ -21,7 +21,7 @@ public class CommentDto {
 
     private Comment parentComment;
 
-    private List<Comment> childComments;
+    private Set<Comment> childComments;
 
     private User user;
 
