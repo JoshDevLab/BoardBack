@@ -17,7 +17,7 @@ public class BoardController {
 
     private final BoardService boardService;
 
-    @PostMapping()
+    @PostMapping
     public ResponseEntity<Board> registerBoard(@RequestBody BoardDto boardDto) {
         return ResponseEntity.ok(boardService.registerBoard(boardDto));
     }

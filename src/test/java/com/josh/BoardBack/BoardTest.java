@@ -187,5 +187,6 @@ public class BoardTest {
 
         // then
         Assertions.assertThat(boards.size()).isEqualTo(1);
+        //Assertions.assertThat(boards.get(0).getComments().size()).isEqualTo(2);
     }
 }
