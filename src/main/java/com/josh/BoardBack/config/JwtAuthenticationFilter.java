@@ -43,7 +43,7 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
         jwt = authHeader.substring(7);
         userEmail = jwtService.extractUsername(jwt);
 
-        // 스프링 시큐리티에서 아직 인증되지 않은 사용자일경우
+        // 헤더에 토큰이 담겨서 넣어왔지만 스프링 시큐리티에서 아직 인증되지 않은 사용자일경우
         if(userEmail != null && SecurityContextHolder.getContext().getAuthentication() == null) {
             UserDetails userDetails = userDetailsService.loadUserByUsername(userEmail);
             if(jwtService.isTokenValid(jwt, userDetails)) {
